@@ -91,6 +91,9 @@ const MainComponent = () => {
   const [showSpinner, setShowSpinner] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const [showOutput, setShowOutput] = useState(false);
+  const [medicineName, setMedicineName] = useState([]);
+  const [synonyms, setSynonyms] = useState([]);
+  const [genericName, setGenericName] = useState([]);
 
   const deleteImage = () => {
     setSelectedFile();
@@ -157,9 +160,12 @@ const MainComponent = () => {
         console.log(error.message);
       });
     await axios
-      .post("https://localhost:6000/upload-image", { image: imgUrl })
+      .post("http://127.0.0.1:5000/upload", { image: imgUrl })
       .then((response) => {
-        console.log(response.data.imageUrl);
+        console.log(response);
+        setSynonyms(response?.data?.synonyms);
+        setMedicineName(response?.data?.drugName);
+        setGenericName(response?.data?.genericName)
       })
       .catch((error) => {
         console.log(error.message);
@@ -218,7 +224,9 @@ const MainComponent = () => {
           </FlexBox>
         )}
       </Wrapper>
-      {showOutput && <MedicineDetails />}
+      {showOutput && (
+        <MedicineDetails synonyms={synonyms} medicineName={medicineName} genericName={genericName} />
+      )}
     </>
   );
 };
