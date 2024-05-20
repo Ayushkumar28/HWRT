@@ -165,7 +165,7 @@ const MainComponent = () => {
         console.log(response);
         setSynonyms(response?.data?.synonyms);
         setMedicineName(response?.data?.drugName);
-        setGenericName(response?.data?.genericName)
+        setGenericName(response?.data?.genericName);
       })
       .catch((error) => {
         console.log(error.message);
@@ -225,7 +225,11 @@ const MainComponent = () => {
         )}
       </Wrapper>
       {showOutput && (
-        <MedicineDetails synonyms={synonyms} medicineName={medicineName} genericName={genericName} />
+        <MedicineDetails
+          synonyms={synonyms}
+          medicineName={medicineName}
+          genericName={genericName}
+        />
       )}
     </>
   );
